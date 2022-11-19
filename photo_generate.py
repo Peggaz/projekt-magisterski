@@ -5,10 +5,14 @@ word = "aaaaaaabbbbbbbccccccccccccccddddddddddda"
 
 
 class GenerateTemplate:
-    def __init__(self):
-        pass
 
-    def generate(self, word):
+
+    def __init__(self):
+        self.photo = None
+        self.word = ''
+
+    def generate(self, word, show):
+        self.word = word
         x = [0]
         y = [0]
         it1 = 1
@@ -17,8 +21,9 @@ class GenerateTemplate:
             y.append(y[-1] + data.PATTERN_GRAMMA[it][1] - data.DEVIANTION_TOLERANCE / 2)
             it1 += 1
         plt.plot(x, y)
-        plt.show()
-
+        if(show):
+            plt.show()
+        self.photo = plt
 
 # generator = GenerateTemplate()
-# generator.generate(word)
+# generator.generate(word, show)
