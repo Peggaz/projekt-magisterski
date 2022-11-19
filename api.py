@@ -1,41 +1,55 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+import photo_analize
+import photo_compare
+import photo_generate
 import main
 
 app = Flask(__name__)
 
 template_dir = 'templates'
-template_plot = [
-    main.photo_generate.GenerateTemplate().generate("AABBBbbbaaaa", show=False),
-    main.photo_generate.GenerateTemplate().generate("AABBBbbbaaaa", show=False)
-]
 
 
 @app.route("/", methods=['GET'])
-def welcom():
-    return render_template("welcom.html")
+def welcome():
+    return render_template("welcome.html")
+@app.route("/about", methods=['GET'])
+def about():
+    return render_template("about.html")
 @app.route("/instruction", methods=['GET'])
 def instruction():
     return render_template("instruction.html")
-
-@app.route("/form_photo", methods=['POST'])
+@app.route("/form_photo", methods=['GET'])
 def send_photo():
     # @TODO: send photo to main.py tu należy umieścić zdjęcie ktre po przesałaniu musi wyświetlić anser, trzeba pomyśleć jak to zrobić dobrze
     return render_template("form_photo.html")
 
-@app.route("/render_answer", methods=['GET'])
+@app.route("/render_answer", methods=['POST', 'GET'])
 def render_answer():
     # @TODO: send render answer to user. anwer należy omówić bo tu trzeba dać kilka zdjęć i tekstów
-    fotoAnalize = main.FotoAnalize("Wig20.png")
-    return render_template("render_answer.html")
+    #TODO zmianić na wczytanie foto z formularza
 
-@app.route("/template", methods=['GET'])
-def template():
+    photoAnalize = photo_analize.FotoAnalize("Wig20.png")
+    photoCompoare = photo_compare.PhotoCompare(photoAnalize.foto_grammar_not_sub)
+    photoGenerate = photo_generate.GenerateTemplate(photoAnalize.foto_grammar_not_sub, show=False)
+    photoGenerate_template = photo_generate.GenerateTemplate(photoCompoare.template, show=False)
+    return render_template("render_answer.html",
+                           photo_template_word = photoCompoare.photo_word,#sting
+                           photo_template_lev = photoCompoare.levenshtein_distance,#int
+                           photo_template_plt = photoGenerate_template.photo,#plot
+                           photo_user = None,#plot bądź png
+                           photo_user_generate_plt = photoGenerate.photo,#plot
+                           photo_user_word_sub = photoAnalize.foto_grammar,#string
+                           photo_user_word=photoAnalize.foto_grammar_not_sub,#string
+                           )
+
+@app.route("/templates", methods=['GET'])
+def templates():
 
     #@TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
-    if len(main.graf_template) > 0:
-        return render_template("template.html")
+    if len(main.graf_template) > 0 and False:
+        return render_template("templates.html")
     return render_template("error.html")
 
 

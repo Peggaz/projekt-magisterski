@@ -14,6 +14,7 @@ class FotoAnalize:
         """
         self.foto_url = foto_url
         self.foto_map = self.makeAndGetFotoMap()
+        self.foto_grammar = self.makeGrammar()
 
 
     def isLine(self, piksel, color_before=[0, 0, 0, 0]):
@@ -43,7 +44,7 @@ class FotoAnalize:
             return e[0]
         map.sort(key=key_sort)
 
-        if not self.valid_map(map):
+        if not self.valid_map(map) and data.DEBUG:
             print("w mapie nastąpił błąd być może wynik będzie przekłamany")
 
         return map
@@ -64,7 +65,8 @@ class FotoAnalize:
         for key in data.PATTERN_GRAMMA:
             if self.is_in_range(sub_pixels, data.PATTERN_GRAMMA[key]):
                 return key
-        print(sub_pixels)
+        if data.DEBUG:
+            print(sub_pixels)
         if (sub_pixels) > 0:
             return 'x'
         return 'X'

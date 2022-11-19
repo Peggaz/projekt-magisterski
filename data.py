@@ -1,6 +1,14 @@
+import data
+
+DEBUG = True
 MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
-
+LEVENSHTEIN_DISTANCE_MAX = 10
+TEMPLATES =[
+    'AAAABbBbbbbbaaaAAA',
+    'BBBBBbbBBBaabBBBBB',
+    'CCCCCccCCCaacCCCCC'
+]
 
 def grammar_genarate():
     ret = {}
@@ -11,7 +19,8 @@ def grammar_genarate():
         ret[it] = (it_dec, it_dec + DEVIANTION_TOLERANCE)
         ret[str(it).upper()] = (-it_dec - DEVIANTION_TOLERANCE, -it_dec)
         it_dec += DEVIANTION_TOLERANCE
-    print(ret)
+    if(data.DEBUG):
+        print(ret)
     return ret
 
 

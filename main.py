@@ -1,15 +1,18 @@
+import data
 import photo_analize
 import photo_generate
+import photo_compare
 
 graf_template = []
 graf_template_png = ["Wig20.png"]
 
 try:
-    for x in list_graf_template:
+    for x in data.TEMPLATES:
         graf_template.append(photo_analize.FotoAnalize(x))
 except:
     graf_template = []
-    print("Error")
+    if(data.DEBUG):
+        print("Błąd generowania wzorców")
 
 
 

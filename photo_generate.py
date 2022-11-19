@@ -7,9 +7,11 @@ word = "aaaaaaabbbbbbbccccccccccccccddddddddddda"
 class GenerateTemplate:
 
 
-    def __init__(self):
+    def __init__(self, word, show=False):
         self.photo = None
-        self.word = ''
+        self.word = word
+        self.generate(word, show)
+
 
     def generate(self, word, show):
         self.word = word
