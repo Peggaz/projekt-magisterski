@@ -36,6 +36,10 @@ hr{
     margin-left: 200px;
 
 }
+section{
+    display: block;
+    position: absolute;
+}
 #text{
     background-color:#242626;
 }
@@ -106,4 +110,12 @@ footer{
     letter-spacing: 2px;
     line-height: 3;
     text-align: center;
+}
+.grammar{
+    /*margin-left: 50px;*/
+    /*margin-right: 50px;*/
+    /*margin-top: 50px;*/
+    /*margin-bottom: 50px;*/
+    width: 1000px;
+    overflow-wrap: break-word;
 }

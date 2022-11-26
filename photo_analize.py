@@ -88,9 +88,6 @@ class FotoAnalize:
                 counter = 0
         return ret
 
-# plt.imshow(imread("Wig20.png"))
-# plt.show()
-# makeFoto = GrammarFotoGenerator(fot.foto_grammar_not_sub)
+plt.imshow(imread("Wig20.png"))
+plt.show()
 
-#@TODO wrzucić generator *.BMP który wpisuje pixel w mniejsce gdzie wykrywa piksel
-#@TODO następnie generuje obraz *.BMP z gramatyki

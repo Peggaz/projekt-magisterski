@@ -1,19 +1,23 @@
 import matplotlib.pyplot as plt
 import data
-
-word = "aaaaaaabbbbbbbccccccccccccccddddddddddda"
-
-
+import random
+import os
 class GenerateTemplate:
-
-
-    def __init__(self, word, show=False):
+    def __init__(self, word, show=False, save_as_png=False, fiele_name=None):
         self.photo = None
         self.word = word
         self.generate(word, show)
+        if save_as_png:
+            if fiele_name == None:
+                self.photo_url = os.path.join(f'static/img/photo_generate{random.randint(0, 9999999)}.png')
+            else:
+                self.photo_url = os.path.join(f'static/img/{fiele_name}.png')
+            self.photo.savefig(self.photo_url)
+        plt.cla()
 
-
-    def generate(self, word, show):
+    def generate(self, word=None, show=False):
+        if(word != None):
+            word = self.word
         self.word = word
         x = [0]
         y = [0]
@@ -27,5 +31,5 @@ class GenerateTemplate:
             plt.show()
         self.photo = plt
 
-# generator = GenerateTemplate()
-# generator.generate(word, show)
+# generator = GenerateTemplate("aaaaaaabbbbbbbccccccccccccccddddddddddda")
+# generator.photo.show()

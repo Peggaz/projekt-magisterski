@@ -1,3 +1,4 @@
+import data
 from flask import Flask
 from flask import render_template
 from flask import request
@@ -5,6 +6,7 @@ import photo_analize
 import photo_compare
 import photo_generate
 import main
+import os
 
 app = Flask(__name__)
 
@@ -25,34 +27,36 @@ def send_photo():
     # @TODO: send photo to main.py tu należy umieścić zdjęcie ktre po przesałaniu musi wyświetlić anser, trzeba pomyśleć jak to zrobić dobrze
     return render_template("form_photo.html")
 
-@app.route("/render_answer", methods=['POST', 'GET'])
+@app.route("/render_answer", methods=['GET'])
 def render_answer():
     # @TODO: send render answer to user. anwer należy omówić bo tu trzeba dać kilka zdjęć i tekstów
     #TODO zmianić na wczytanie foto z formularza
-
     photoAnalize = photo_analize.FotoAnalize("Wig20.png")
     photoCompoare = photo_compare.PhotoCompare(photoAnalize.foto_grammar_not_sub)
-    photoGenerate = photo_generate.GenerateTemplate(photoAnalize.foto_grammar_not_sub, show=False)
-    photoGenerate_template = photo_generate.GenerateTemplate(photoCompoare.template, show=False)
+    photoGenerate = photo_generate.GenerateTemplate(photoAnalize.foto_grammar_not_sub, save_as_png=True)
+    photoGenerate_template = photo_generate.GenerateTemplate(photoCompoare.template, save_as_png=True)
+
     return render_template("render_answer.html",
                            photo_template_word = photoCompoare.photo_word,#sting
                            photo_template_lev = photoCompoare.levenshtein_distance,#int
-                           photo_template_plt = photoGenerate_template.photo,#plot
-                           photo_user = None,#plot bądź png
-                           photo_user_generate_plt = photoGenerate.photo,#plot
+                           photo_template_url = photoGenerate_template.photo_url,#plot
+                           photo_user_url = os.path.join("static/img/Wig20.png"),#plot bądź png
+                           photo_user_generate_url = photoGenerate.photo_url,#plot
                            photo_user_word_sub = photoAnalize.foto_grammar,#string
-                           photo_user_word=photoAnalize.foto_grammar_not_sub,#string
+                           photo_user_word=photoAnalize.foto_grammar_not_sub#string
                            )
 
 @app.route("/templates", methods=['GET'])
 def templates():
 
     #@TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
-    if len(main.graf_template) > 0 and False:
-        return render_template("templates.html")
-    return render_template("error.html")
+
+    return render_template("templates.html", templates=data.TEMPLATES, len = data.MIN_LENGH_SAMPLE, tolerance = data.DEVIANTION_TOLERANCE)
+    # return render_template("error.html")
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', debug=True, port=5003)
-    # app.run(host='wierzba.wzks.uj.edu.pl', debug=True, port=5010)
+    if data.DEBUG:
+        app.run(host='localhost', debug=True, port=5003)
+    else:
+        app.run(host='wierzba.wzks.uj.edu.pl', debug=False, port=5010)
