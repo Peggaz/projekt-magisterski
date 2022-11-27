@@ -59,4 +59,4 @@ if __name__ == '__main__':
     if data.DEBUG:
         app.run(host='localhost', debug=True, port=5003)
     else:
-        app.run(host='wierzba.wzks.uj.edu.pl', debug=False, port=5010)
+        app.run(host='wierzba.wzks.uj.edu.pl', debug=False, port=5110)

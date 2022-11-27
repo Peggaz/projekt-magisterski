@@ -8,6 +8,7 @@ import data
 class FotoAnalize:
     foto_grammar = ''
     foto_grammar_not_sub = ''
+
     def __init__(self, foto_url):
         """
         :param foto_url:
@@ -16,8 +17,7 @@ class FotoAnalize:
         self.foto_map = self.makeAndGetFotoMap()
         self.foto_grammar = self.makeGrammar()
 
-
-    def isLine(self, piksel, color_before=[0, 0, 0, 0]):
+    def is_line(self, piksel, color_before=[0, 0, 0, 0]):
         if color_before not in piksel:
             return True
         return False
@@ -29,11 +29,11 @@ class FotoAnalize:
             foto_url = self.foto_url
         img = imread(foto_url)  # wczytanie obrazu
         id_line = 0
-        insert_col = []#kolumny które są już zapisane
+        insert_col = []  # kolumny które są już zapisane
         for row in img:
             id_col = 0
             for piksel in row:
-                if self.isLine(piksel) and id_col not in insert_col:
+                if self.is_line(piksel) and id_col not in insert_col:
                     map.append((id_col, id_line))
                     insert_col.append(id_col)
 
@@ -42,6 +42,7 @@ class FotoAnalize:
 
         def key_sort(e):
             return e[0]
+
         map.sort(key=key_sort)
 
         if not self.valid_map(map) and data.DEBUG:
@@ -88,6 +89,6 @@ class FotoAnalize:
                 counter = 0
         return ret
 
+
 plt.imshow(imread("Wig20.png"))
 plt.show()
-
