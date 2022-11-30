@@ -6,6 +6,7 @@ import os
 
 class GenerateTemplate:
     def __init__(self, word, show=False, save_as_png=False, fiele_name=None):
+        plt.rcParams["figure.figsize"] = (20, 8)
         self.photo = None
         self.word = word
         self.generate(word, show)
@@ -15,6 +16,8 @@ class GenerateTemplate:
             else:
                 self.photo_url = os.path.join(f'static/img/{fiele_name}.png')
             self.photo.savefig(self.photo_url)
+        if data.DEBUG:
+            self.photo.show()
         plt.cla()
 
     def generate(self, word=None, show=False):
@@ -26,12 +29,11 @@ class GenerateTemplate:
         it1 = 1
         for it in word:
             x.append(it1)
-            y.append(y[-1] + data.PATTERN_GRAMMA[it][1] - data.DEVIANTION_TOLERANCE / 2)
+            y.append(y[-1] + data.PATTERN_GRAMMA[it][1] - data.DEVIANTION_TOLERANCE/3)
             it1 += 1
         plt.plot(x, y)
         if show:
             plt.show()
         self.photo = plt
 
-# generator = GenerateTemplate("aaaaaaabbbbbbbccccccccccccccddddddddddda")
-# generator.photo.show()
+# generator = GenerateTemplate("IICCCCacDGcaCAbbbbbdhgfaABBEAbAACAaaaCadBacccabbdeAabaAABBBCBABabBBBBACDBAAaaDECAabaAaaAABAAABAAaAAABCaaaaaBBBCDaaCAbaaCAbcbaaaccdAEedCAbbbcABaaAbcABCCABCAAAAAA")

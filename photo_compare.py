@@ -6,6 +6,7 @@ class PhotoCompare:
         self.template = None
         self.levenshtein_distance = data.LEVENSHTEIN_DISTANCE_MAX
         self.compare()
+        self.template_word = ""
 
     def LevenshteinDistance(self, s, t):
         '''
@@ -38,3 +39,4 @@ class PhotoCompare:
                 if levenshteinDistance < data.LEVENSHTEIN_DISTANCE_MAX and self.levenshtein_distance > levenshteinDistance:
                     self.template = template
                     self.levenshtein_distance = levenshteinDistance
+                    self.template_word = template

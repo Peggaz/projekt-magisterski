@@ -13,10 +13,10 @@ import random
 
 # class scraping google graph svg
 class ScrappGoogelGraph:
-    def __init__(self, url, save_as_png=False, file_name=None):
+    def __init__(self, word, save_as_png=True, file_name=None):
         self.svg = None
         self.page = None
-        self.url = url
+        self.url = f"https://www.google.com/search?q={word}"
         self.init()
         if save_as_png:
             self.rand = random.randint(0, 9999999)
@@ -25,7 +25,7 @@ class ScrappGoogelGraph:
             self.svg_to_png(self.photo_url)
 
     def init(self):
-        params = {'api_key': google_account.api_key, 'url': url}
+        params = {'api_key': google_account.api_key, 'url': self.url}
         self.page = requests.get('http://api.scraperapi.com/', params=urlencode(params))
         self.svg = self.get_svg()
         if self.svg is None:
@@ -40,7 +40,7 @@ class ScrappGoogelGraph:
         svg = soup.find('svg', {'class': 'uch-psvg'})
         # printing to have some visual feedback
         if data.DEBUG:
-            print('Loading :', url)
+            print('Loading :', self.url)
             print(svg)
         # writing the data into our CSV file
         return svg
@@ -68,6 +68,6 @@ class ScrappGoogelGraph:
             print("błąd w zapisie")
 
 
-word = "wig20"
-url = f"https://www.google.com/search?q={word}"
-data = ScrappGoogelGraph(url, True)
+# word = "wig20"
+# url = f"https://www.google.com/search?q={word}"
+# data = ScrappGoogelGraph(url, True)

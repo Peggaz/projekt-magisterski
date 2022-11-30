@@ -5,7 +5,7 @@ import matplotlib.image as mpimg
 import data
 
 
-class FotoAnalize:
+class PhotoAnalize:
     foto_grammar = ''
     foto_grammar_not_sub = ''
 
@@ -17,7 +17,7 @@ class FotoAnalize:
         self.foto_map = self.makeAndGetFotoMap()
         self.foto_grammar = self.makeGrammar()
 
-    def is_line(self, piksel, color_before=[0, 0, 0, 0]):
+    def is_line(self, piksel, color_before=[1., 1., 1.]):
         if color_before not in piksel:
             return True
         return False
@@ -59,7 +59,7 @@ class FotoAnalize:
         return True
 
     def is_in_range(self, sub, range_tuple):
-        return range_tuple[0] <= sub < range_tuple[1]
+        return range_tuple[0] < sub <= range_tuple[1]
 
     def get_word_in_grammar(self, pixel_id):
         sub_pixels = self.foto_map[pixel_id][1] - self.foto_map[pixel_id + data.MIN_LENGH_SAMPLE][1]
@@ -89,6 +89,7 @@ class FotoAnalize:
                 counter = 0
         return ret
 
-
-plt.imshow(imread("Wig20.png"))
-plt.show()
+# pa = PhotoAnalize('Wig20.png')
+# print(pa.foto_grammar_not_sub)
+# plt.imshow(imread("Wig20.png"))
+# plt.show()
