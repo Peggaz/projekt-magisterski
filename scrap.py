@@ -9,27 +9,31 @@ import os
 from svglib.svglib import svg2rlg
 from reportlab.graphics import renderPM
 import random
-
+from os.path import exists
 
 # class scraping google graph svg
 class ScrappGoogelGraph:
-    def __init__(self, word, save_as_png=True, file_name=None):
+    def __init__(self, word, save_as_png=True, file_name=None, scrap_forcer=False):
+        word = word.replace(" ", "+")
+        self.photo_url = os.path.join(f'static/img/photo_scrap{word}.png')
+        self.continue_scrap = not exists(self.photo_url)
         self.svg = None
         self.page = None
         self.url = f"https://www.google.com/search?q={word}"
-        self.init()
-        if save_as_png:
-            self.rand = random.randint(0, 9999999)
-            self.save_svg_as_file()
-            self.photo_url = os.path.join(f'static/img/photo_scrap{self.rand}.png')
+        if self.continue_scrap or scrap_forcer:
+            self.init()
+            if save_as_png:
+                self.rand = random.randint(0, 9999999)
+                self.save_svg_as_file()
             self.svg_to_png(self.photo_url)
 
     def init(self):
         params = {'api_key': google_account.api_key, 'url': self.url}
-        self.page = requests.get('http://api.scraperapi.com/', params=urlencode(params))
-        self.svg = self.get_svg()
-        if self.svg is None:
+        for it in range(data.MAX_ITERATE_SEARCH):
+            self.page = requests.get('http://api.scraperapi.com/', params=urlencode(params))
             self.svg = self.get_svg()
+            if self.svg is not None:
+                break
         if self.svg is None:
             raise Exception("Błąd w pobieraniu svg. Najprawdopodobniej nie istnieje wykres google dla podanej frazy")
         self.validate_and_fix_svg()

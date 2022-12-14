@@ -12,7 +12,7 @@ import scrap
 app = Flask(__name__)
 
 template_dir = 'templates'
-
+main_content = main.MainContent()
 
 @app.route("/", methods=['GET'])
 def welcome():
@@ -39,26 +39,24 @@ def send_photo():
 def render_answer():
     # @TODO: send render answer to user. anwer należy omówić bo tu trzeba dać kilka zdjęć i tekstów
     # TODO zmianić na wczytanie foto z formularza
-    photoAnalize = None
-    if request.method == 'POST':
-        from_data = request.form
-        s = scrap.ScrappGoogelGraph(from_data['name'])
-        photoAnalize = photo_analize.PhotoAnalize(s.photo_url)
-    else:
-        render_template("error.html", message="Niepoprawne dane")
+    try:
+        if request.method == 'POST':
+            from_data = request.form
+            if from_data['name'] not in data.PRERENDERED_ANALIZE:
+                main_content.photo_befor_render(from_data['name'])
+            return render_template("render_answer.html", photo_template_word=main_content.prerender_analize[from_data['name']]['photo_template_word'],
+                                   photo_template_lev=main_content.prerender_analize[from_data['name']]['photo_template_lev'],
+                                   photo_template_url=main_content.prerender_analize[from_data['name']]['photo_template_url'],
+                                   photo_user_url=main_content.prerender_analize[from_data['name']]['photo_user_url'],
+                                   photo_user_generate_url=main_content.prerender_analize[from_data['name']]['photo_user_generate_url'],
+                                   photo_user_word_sub=main_content.prerender_analize[from_data['name']]['photo_user_word_sub'],
+                                   photo_user_word=main_content.prerender_analize[from_data['name']]['photo_user_word']
+                                   )
 
-    photoCompoare = photo_compare.PhotoCompare(photoAnalize.foto_grammar_not_sub)
-    photoGenerate = photo_generate.GenerateTemplate(photoAnalize.foto_grammar_not_sub, save_as_png=True)
-
-    return render_template("render_answer.html",
-                           photo_template_word=photoCompoare.template_word,  # sting
-                           photo_template_lev=photoCompoare.levenshtein_distance,  # int
-                           photo_template_url=main.graf_template_png[photoCompoare.template],  # plot
-                           photo_user_url=s.photo_url,  # plot bądź png
-                           photo_user_generate_url=photoGenerate.photo_url,  # plot
-                           photo_user_word_sub=photoAnalize.foto_grammar,  # string
-                           photo_user_word=photoAnalize.foto_grammar_not_sub  # string
-                           )
+        else:
+            render_template("error.html", message="Niepoprawne dane")
+    except Exception as e:
+        return render_template("error.html", message=e)
 
 
 @app.route("/templates", methods=['GET'])

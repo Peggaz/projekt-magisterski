@@ -119,3 +119,15 @@ footer{
     width: 1000px;
     overflow-wrap: break-word;
 }
+
+/*Kuba dodał*/
+img{
+    width: 60%;
+}
+
+p{
+    width: 60%;
+    padding: 10px;
+    word-wrap: break-word;
+    font-size: 20px;
+}

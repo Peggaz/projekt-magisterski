@@ -9,6 +9,12 @@ TEMPLATES =[
     'BBBBBbbBBBaabBBBBB',
     'CCCCCccCCCaacCCCCC'
 ]
+PRERENDERED_ANALIZE = [
+    # 'akcje tesli',
+    # 'Wig20',
+    # 'akcje orlen'
+]
+MAX_ITERATE_SEARCH = 3
 
 def grammar_genarate():
     ret = {}

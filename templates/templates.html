@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block main_content %}
+<section>
+    <h1> Wzorce wykorzystywane podczas analizy </h1>
+
+    {% for template in templates %}
+        <div onload="generate()">
+
+        </div>
+        <div>Wzorzec w zapisie znaków terminalnych: <I>{{template}}</I></div>
+    {% endfor %}
+<!--    TODO: Dodaj wzorce w forze-->
+</section>
+{% endblock %}

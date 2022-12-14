@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block main_content %}
+<section>
+    <h1> Analiza wykresu </h1>
+    <div >
+        <p>Znaleziony wykres google:</p>
+        <img src="{{ photo_user_url }}">
+        <p> Słowo wygenerowane z gramatyki na podstawie znaleizonego wykresu: {{ photo_user_word_sub }}</p>
+        <p>Wzorzec występuje:
+            <br>
+            {{ photo_user_word|safe }}
+        </p>
+        <h4>Wygenerowany wykres z gramatyki obrazu:</h4>
+        <img src="{{ photo_user_generate_url }}">
+        <p>Najlepiej pasujący wzorzez z odległością edycyjną:  {{ photo_template_lev }}</p>
+        <p>{{photo_template_url|safe}}</p>
+        <img src="{{ photo_template_url }}">
+        <p>Słowo wzorca:</p>
+        <p>{{ photo_template_word|safe }}</p>
+    </div >
+    <h4> IMG </h4>
+    <div>
+
+    </div>
+</section>
+{% endblock %}

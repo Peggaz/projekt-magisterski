@@ -6,7 +6,6 @@ class PhotoCompare:
         self.template = None
         self.levenshtein_distance = data.LEVENSHTEIN_DISTANCE_MAX
         self.compare()
-        self.template_word = ""
 
     def LevenshteinDistance(self, s, t):
         '''
@@ -32,6 +31,7 @@ class PhotoCompare:
         '''
         Funkcja porównująca zdjęcia
         '''
+        local_word = self.photo_word
         for template in data.TEMPLATES:
             len_sub_word = len(self.photo_word) - len(template)
             for it in range(0, len_sub_word):
@@ -39,4 +39,5 @@ class PhotoCompare:
                 if levenshteinDistance < data.LEVENSHTEIN_DISTANCE_MAX and self.levenshtein_distance > levenshteinDistance:
                     self.template = template
                     self.levenshtein_distance = levenshteinDistance
-                    self.template_word = template
+                    local_word = f"{self.photo_word[0:it]}<mark id='compare_word'>{self.photo_word[it:len(self.photo_word) - len_sub_word + it]}</mark>{self.photo_word[len(self.photo_word) - len_sub_word + it:]}"
+        self.photo_word = local_word

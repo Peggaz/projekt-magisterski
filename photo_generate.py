@@ -14,7 +14,7 @@ class GenerateTemplate:
             if fiele_name is None:
                 self.photo_url = os.path.join(f'static/img/photo_generate{random.randint(0, 9999999)}.png')
             else:
-                self.photo_url = os.path.join(f'static/img/{fiele_name}.png')
+                self.photo_url = os.path.join(fiele_name)
             self.photo.savefig(self.photo_url)
         if data.DEBUG:
             self.photo.show()
