@@ -1,8 +1,5 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.pyplot import imread
-import matplotlib.image as mpimg
 import data
+from matplotlib.pyplot import imread
 
 
 class PhotoAnalize:
@@ -10,19 +7,30 @@ class PhotoAnalize:
     foto_grammar_not_sub = ''
 
     def __init__(self, foto_url):
-        """
+        '''
         :param foto_url:
-        """
+        '''
         self.foto_url = foto_url
         self.foto_map = self.makeAndGetFotoMap()
         self.foto_grammar = self.makeGrammar()
 
     def is_line(self, piksel, color_before=[1., 1., 1.]):
+        '''
+        Funkcja sprawdzająca czy jest to liniia czy tło wykresu
+        :param piksel:
+        :param color_before:
+        :return: sprawdza czy dany piksel jest tłem czy linią
+        '''
         if color_before not in piksel:
             return True
         return False
 
     def makeAndGetFotoMap(self, foto_url=None):
+        '''
+        wczytuje zdjęcie i iterując piksel po pikselu zapisuje xy pikseli linii wykresu
+        :param foto_url:
+        :return: Map
+        '''
         map = []
         color_line = [0, 0, 0, 0]
         if not foto_url:
@@ -51,6 +59,12 @@ class PhotoAnalize:
         return map
 
     def valid_map(self, map):
+        '''
+        sprawdzenie czy mapa jest poprawna
+        :param map: mapa pikseli linii wykresu
+        :return: bool czy wartosc jest poprawna
+        '''
+
         before = -1
         for it in map:
             if it[0] != before + 1:
@@ -59,9 +73,21 @@ class PhotoAnalize:
         return True
 
     def is_in_range(self, sub, range_tuple):
+        '''
+        przeniesony warunek sprawdzenie czy różnica odległości pikseli jest w tolerancji tego konkretnego
+        symbolu terminalnego jest w zakresie
+        :param sub: różnica między pikselami
+        :param range_tuple: zakres znaku terminalnego
+        :return: bool
+        '''
         return range_tuple[0] < sub <= range_tuple[1]
 
     def get_word_in_grammar(self, pixel_id):
+        '''
+        Metoda sprawdzająca czy piksel o id jest w gramatycę i zwraca znak terminalny
+        :param pixel_id: id piksela
+        :return: znak terminalny
+        '''
         sub_pixels = self.foto_map[pixel_id][1] - self.foto_map[pixel_id + data.MIN_LENGH_SAMPLE][1]
         for key in data.PATTERN_GRAMMA:
             if self.is_in_range(sub_pixels, data.PATTERN_GRAMMA[key]):
@@ -73,6 +99,11 @@ class PhotoAnalize:
         return 'X'
 
     def makeGrammar(self, url=None):
+        '''
+        Tworzy gramatykę z mapy
+        :param url: url zdjęcia do stworzenia gramatyki
+        :return: słowo złożone ze znaków terminalnych reprezentujące wykres
+        '''
         if url:
             self.foto_map = self.makeAndGetFotoMap()
         ret = ""

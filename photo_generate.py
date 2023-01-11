@@ -1,7 +1,8 @@
-import matplotlib.pyplot as plt
-import data
-import random
 import os
+import random
+
+import data
+import matplotlib.pyplot as plt
 
 
 class GenerateTemplate:
@@ -21,6 +22,12 @@ class GenerateTemplate:
         plt.cla()
 
     def generate(self, word=None, show=False):
+        '''
+        generowanie grafiki pyplot z zadango słowa złożonego ze znaków terminalnych należoncyhc do predefiniowanej gramatyki
+        :param word: słowo złożone ze znaków terminalnych
+        :param show: czy wyświetlić pyplot po wygenerowaniu
+        :return: pyplot zawierający wykres
+        '''
         if word is None:
             word = self.word
         self.word = word
@@ -29,7 +36,7 @@ class GenerateTemplate:
         it1 = 1
         for it in word:
             x.append(it1)
-            y.append(y[-1] + data.PATTERN_GRAMMA[it][1] - data.DEVIANTION_TOLERANCE/3)
+            y.append(y[-1] + data.PATTERN_GRAMMA[it][1] - data.DEVIANTION_TOLERANCE / 3)
             it1 += 1
         plt.plot(x, y)
         if show:
