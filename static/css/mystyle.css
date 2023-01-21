@@ -65,3 +65,7 @@ button:hover {
     padding: 5px;
     text-align: center;
 }
+
+.img_term {
+    width: 150px;
+}

@@ -31,7 +31,7 @@ def instruction():
 
 @app.route("/form_photo", methods=['GET'])
 def send_photo():
-    data.logging("wysłano formularz")
+    data.logging.info("wysłano formularz")
     return render_template("form_photo.html")
 
 
@@ -74,9 +74,10 @@ def templates():
 @app.route("/terms", methods=['GET'])
 def terms():
     # @TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
-
-    return render_template("terms.html", templates=data.TEMPLATES, len=data.MIN_LENGH_SAMPLE,
-                           tolerance=data.DEVIANTION_TOLERANCE)
+    terms = []
+    for term in data.PATTERN_GRAMMA:
+        terms.append(term)
+    return render_template("terms.html", terms=terms)
     # return render_template("error.html")
 
 

@@ -4,8 +4,9 @@
     <h1> Wzorce wykorzystywane podczas analizy </h1>
 
     {% for term in terms %}
-    <div>Term: <I>{{term}}</I> graf dla termu: <img
-            src="{{ url_for('static/img/terms', filename = '{{ term }}.png') }}"></div>
+    <div>Term: <i>{{term}}</i> graf dla termu:
+        <img class="img_term center" src="{{ url_for('static', filename = '/img/terms/')}}{{term}}.png">
+    </div>
     {% endfor %}
     <!--    TODO: Dodaj wzorce w forze-->
 </section>

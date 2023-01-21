@@ -18,9 +18,10 @@ class MainContent:
                 photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True,
                                                                 fiele_name=os.path.join(f'static/img/{iterator}.png'))
 
-        # for iterator in data.PATTERN_GRAMMA:
-        #     if not os.path.exists (os.path.join(f'static/img/terms/{iterator}.png')):
-        #         photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(f'static/img/terms/{iterator}.png'))
+        for iterator in data.PATTERN_GRAMMA:
+            if not os.path.exists(os.path.join(f'static/img/terms/{iterator}.png', )):
+                photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(
+                    f'static/img/terms/{iterator}.png'))
 
         for it in data.PRERENDERED_ANALIZE:
             if not os.path.exists(os.path.join(f'static/img/{it}_{date.today()}.png')):
