@@ -10,17 +10,23 @@ import scrap
 
 class MainContent:
     def __init__(self):
+        data.logging.info("inicjalizowanie MianContent")
         self.prerender_analize = {}
         self.graf_template_png = {}
-        for x in data.TEMPLATES:
-            if not os.path.exists (os.path.join(f'static/img/{x}.png')):
-                photoGenerate = photo_generate.GenerateTemplate(x, save_as_png=True, fiele_name=os.path.join(f'static/img/{x}.png'))
+        for iterator in data.TEMPLATES:
+            if not os.path.exists(os.path.join(f'static/img/{iterator}.png')):
+                photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True,
+                                                                fiele_name=os.path.join(f'static/img/{iterator}.png'))
+
+        # for iterator in data.PATTERN_GRAMMA:
+        #     if not os.path.exists (os.path.join(f'static/img/terms/{iterator}.png')):
+        #         photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(f'static/img/terms/{iterator}.png'))
 
         for it in data.PRERENDERED_ANALIZE:
             if not os.path.exists(os.path.join(f'static/img/{it}_{date.today()}.png')):
                 self.photo_befor_render(it)
-        print("JESTEM")
     def photo_befor_render(self, word_search):
+        data.logging.info("photo_befor_render")
         if word_search not in self.prerender_analize:
             photoAnalize = None
             if (data.SCRAP):

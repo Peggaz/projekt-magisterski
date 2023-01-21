@@ -1,15 +1,13 @@
-from flask import request
 import requests
-import google_account
-from bs4 import BeautifulSoup
-import shutil
-import data
 from urllib.parse import urlencode
-import os
-from svglib.svglib import svg2rlg
+
+import data
+import google_account
+import requests
+from bs4 import BeautifulSoup
 from reportlab.graphics import renderPM
-import random
-from os.path import exists
+from svglib.svglib import svg2rlg
+
 
 # class scraping google graph svg
 class ScrappGoogelGraph:
@@ -35,6 +33,7 @@ class ScrappGoogelGraph:
             if self.svg is not None:
                 break
         if self.svg is None:
+            data.logging.ERROR(f"Próba scrapinngu dla adresu:{self.url}, nie powiodła się")
             raise Exception("Błąd w pobieraniu svg. Najprawdopodobniej nie istnieje wykres google dla podanej frazy")
         self.validate_and_fix_svg()
 

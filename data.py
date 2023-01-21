@@ -1,4 +1,8 @@
+import logging
+
 import data
+
+logging.basicConfig(filename="log.txt", encoding='utf-8', level=logging.DEBUG)
 INDEX_PHOTO = 0
 DEBUG = True
 SCRAP = False

@@ -1,18 +1,18 @@
+import logging
+
 import data
+import main
 from flask import Flask
 from flask import render_template
 from flask import request
-import photo_analize
-import photo_compare
-import photo_generate
-import main
-import os
-import scrap
+
+logging.basicConfig(filename="log.txt")
 
 app = Flask(__name__)
 
 template_dir = 'templates'
 main_content = main.MainContent()
+
 
 @app.route("/", methods=['GET'])
 def welcome():
@@ -31,7 +31,7 @@ def instruction():
 
 @app.route("/form_photo", methods=['GET'])
 def send_photo():
-    # @TODO: send photo to main.py tu należy umieścić zdjęcie ktre po przesałaniu musi wyświetlić anser, trzeba pomyśleć jak to zrobić dobrze
+    data.logging("wysłano formularz")
     return render_template("form_photo.html")
 
 
@@ -39,10 +39,13 @@ def send_photo():
 def render_answer():
     # @TODO: send render answer to user. anwer należy omówić bo tu trzeba dać kilka zdjęć i tekstów
     # TODO zmianić na wczytanie foto z formularza
+    logging.info("render_answer")
     try:
         if request.method == 'POST':
             from_data = request.form
+            data.logging.info(f"żądanie analizy dla:{from_data['name']}")
             if from_data['name'] not in data.PRERENDERED_ANALIZE:
+                data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
                 main_content.photo_befor_render(from_data['name'])
             return render_template("render_answer.html", photo_template_word=main_content.prerender_analize[from_data['name']]['photo_template_word'],
                                    photo_template_lev=main_content.prerender_analize[from_data['name']]['photo_template_lev'],
@@ -66,6 +69,22 @@ def templates():
     return render_template("templates.html", templates=data.TEMPLATES, len=data.MIN_LENGH_SAMPLE,
                            tolerance=data.DEVIANTION_TOLERANCE)
     # return render_template("error.html")
+
+
+@app.route("/terms", methods=['GET'])
+def terms():
+    # @TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
+
+    return render_template("terms.html", templates=data.TEMPLATES, len=data.MIN_LENGH_SAMPLE,
+                           tolerance=data.DEVIANTION_TOLERANCE)
+    # return render_template("error.html")
+
+
+@app.route("/error", methods=['GET'])
+def error():
+    logging.info("error web")
+    # TODO do wywalenia
+    return render_template("error.html")
 
 
 if __name__ == '__main__':
