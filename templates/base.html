@@ -4,22 +4,21 @@
 <head>
     <link rel="icon" type="image" href="https://cdn.pixabay.com/photo/2016/10/18/19/40/anatomy-1751201_960_720.png">
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Raleway:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
-    <script>
-        function generate(){
-            console.log("dupa");
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Raleway:wght@400;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/mystyle.css') }}">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">-->
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">-->
     <title>Analiza wzorców ekonomicznych na wektorze zmian giełdy światowej</title>
 </head>
 <body>
 {% include "header.html" %}
-        <div class = "main">
-            {% block main_content %}
+<div class="main-conteiner">
+    {% block main_content %}
 
-            {% endblock %}
-        </div>
+    {% endblock %}
+</div>
 {% include "footer.html" %}
 </body>
 </html>

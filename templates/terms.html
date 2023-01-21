@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main_content %}
+<section>
+    <h1> Wzorce wykorzystywane podczas analizy </h1>
+
+    {% for term in terms %}
+    <div>Term: <I>{{term}}</I> graf dla termu: <img
+            src="{{ url_for('static/img/terms', filename = '{{ term }}.png') }}"></div>
+    {% endfor %}
+    <!--    TODO: Dodaj wzorce w forze-->
+</section>
+{% endblock %}
