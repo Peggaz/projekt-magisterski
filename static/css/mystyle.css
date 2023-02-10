@@ -69,3 +69,7 @@ button:hover {
 .img_term {
     width: 150px;
 }
+
+#mark_compare_word {
+    background-color: #0f8387 !important;
+}

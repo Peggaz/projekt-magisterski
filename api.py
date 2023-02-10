@@ -37,8 +37,6 @@ def send_photo():
 
 @app.route("/render_answer", methods=['GET', 'POST'])
 def render_answer():
-    # @TODO: send render answer to user. anwer należy omówić bo tu trzeba dać kilka zdjęć i tekstów
-    # TODO zmianić na wczytanie foto z formularza
     logging.info("render_answer")
     try:
         if request.method == 'POST':

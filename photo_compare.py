@@ -42,5 +42,5 @@ class PhotoCompare:
                     self.template = template
                     self.levenshtein_distance = levenshteinDistance
                     #Dodanie <mark> do kodu html w celu zaznaczenia dodanie najlepszego wzorca
-                    local_word = f"{self.photo_word[0:it]}<mark id='compare_word'>{self.photo_word[it:len(self.photo_word) - len_sub_word + it]}</mark>{self.photo_word[len(self.photo_word) - len_sub_word + it:]}"
+                    local_word = f"{self.photo_word[0:it]}<mark id='mark_compare_word'>{self.photo_word[it:len(self.photo_word) - len_sub_word + it]}</mark>{self.photo_word[len(self.photo_word) - len_sub_word + it:]}"
         self.photo_word = local_word

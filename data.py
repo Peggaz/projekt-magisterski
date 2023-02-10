@@ -6,8 +6,6 @@ logging.basicConfig(filename="log.txt", encoding='utf-8', level=logging.DEBUG)
 INDEX_PHOTO = 0
 DEBUG = True
 SCRAP = False
-if not DEBUG:
-    SCRAP = True
 MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
 LEVENSHTEIN_DISTANCE_MAX = 1000

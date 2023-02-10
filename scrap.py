@@ -1,4 +1,4 @@
-import requests
+import os
 from urllib.parse import urlencode
 
 import data
@@ -14,7 +14,7 @@ class ScrappGoogelGraph:
     def __init__(self, word, save_as_png=True, file_name=None, scrap_forcer=False):
         word = word.replace(" ", "+")
         self.photo_url = os.path.join(f'static/img/photo_scrap{word}.png')
-        self.continue_scrap = not exists(self.photo_url)
+        self.continue_scrap = not os.path.exists(self.photo_url)
         self.svg = None
         self.page = None
         self.url = f"https://www.google.com/search?q={word}"
