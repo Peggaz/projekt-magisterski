@@ -1,37 +1,40 @@
 {% extends 'base.html' %}
 {% block main_content %}
-<section class="container">
-    <h1 class="text-center"> Analiza wykresu </h1>
-    <hr>
-    <br>
-    <div class="container">
-        <div class="container center">
-            <h4>Znaleziony wykres google:</h4>
-            <img class="center" src="{{ photo_user_url }}">
+<section class="main-wrapper container">
+    <div class="text-wrapper">
+        <h1 class="text-center"> Analiza wykresu </h1>
+        <hr>
+        <br>
+        <div class="container">
+            <div class="container center">
+                <h4>Znaleziony wykres google:</h4>
+                <img class="center img-width" src="{{ photo_user_url }}">
+                <br>
+            </div>
+            <div class="container center">
+                <h4> Słowo w zapisie skróconym wygenerowane z gramatyki na podstawie znalezionego wykresu:</h4>
+                <h5 class="center long-text"> {{ photo_user_word_sub }}</h5>
+                <br>
+            </div>
+            <div class="container center">
+                <h4>Wzorzec występuje:</h4>
+                <h5 class="center long-text">{{ photo_user_word|safe }}</h5>
+                <br>
+            </div>
+            <div class="container center">
+                <h4>Wygenerowany wykres z gramatyki obrazu:</h4>
+                <img class="center img-width" src="{{ photo_user_generate_url }}">
+                <br>
+                <br>
+                <h4 class="long-text">Najlepiej pasujący wzorzez z odległością edycyjną: {{ photo_template_lev }}</h4>
+                <img class="center img-width" src="{{ photo_template_url }}">
+                <br>
+            </div>
+            <div class="container center">
+                <h4>Słowo wzorca:</h4>
+                <h5>{{ photo_template_word|safe }}</h5>
+            </div>
             <br>
-        </div>
-        <div class="container center">
-            <h4> Słowo w zapisie skróconym wygenerowane z gramatyki na podstawie znalezionego wykresu:</h4>
-            <h5 class="center"> {{ photo_user_word_sub }}</h5>
-            <br>
-        </div>
-        <div class="container center">
-            <h4>Wzorzec występuje:</h4>
-            <h5 class="center">{{ photo_user_word|safe }}</h5>
-            <br>
-        </div>
-        <div class="container center">
-            <h4>Wygenerowany wykres z gramatyki obrazu:</h4>
-            <img class="center" src="{{ photo_user_generate_url }}">
-            <br>
-            <br>
-            <h4>Najlepiej pasujący wzorzez z odległością edycyjną: {{ photo_template_lev }}</h4>
-            <img class="center" src="{{ photo_template_url }}">
-            <br>
-        </div>
-        <div class="container center">
-            <h4>Słowo wzorca:</h4>
-            <h5>{{ photo_template_word|safe }}</h5>
         </div>
     </div>
 </section>

@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% block main_content %}
-<section>
-    <div class="container center">
+<section class="main-wrapper">
+    <div class="container center text-wrapper">
         <h1 class="center"> Wzorce wykorzystywane podczas analizy </h1>
 
         {% for template in templates %}
         <div class="container center">Wzorzec w zapisie znaków terminalnych: <I>{{template}}</I></div>
         {% endfor %}
-        <!--    TODO: Dodaj wzorce w forze-->
     </div>
 </section>
 {% endblock %}

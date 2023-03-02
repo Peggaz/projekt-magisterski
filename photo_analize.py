@@ -53,12 +53,12 @@ class PhotoAnalize:
 
         map.sort(key=key_sort)
 
-        if not self.valid_map(map) and data.DEBUG:
+        if not self.validMap(map) and data.DEBUG:
             print("w mapie nastąpił błąd być może wynik będzie przekłamany")
 
         return map
 
-    def valid_map(self, map):
+    def validMap(self, map):
         '''
         sprawdzenie czy mapa jest poprawna
         :param map: mapa pikseli linii wykresu
@@ -72,7 +72,7 @@ class PhotoAnalize:
             before += 1
         return True
 
-    def is_in_range(self, sub, range_tuple):
+    def isInRange(self, sub, range_tuple):
         '''
         przeniesony warunek sprawdzenie czy różnica odległości pikseli jest w tolerancji tego konkretnego
         symbolu terminalnego jest w zakresie
@@ -82,7 +82,7 @@ class PhotoAnalize:
         '''
         return range_tuple[0] < sub <= range_tuple[1]
 
-    def get_word_in_grammar(self, pixel_id):
+    def getTermInGrammar(self, pixel_id):
         '''
         Metoda sprawdzająca czy piksel o id jest w gramatycę i zwraca znak terminalny
         :param pixel_id: id piksela
@@ -90,7 +90,7 @@ class PhotoAnalize:
         '''
         sub_pixels = self.foto_map[pixel_id][1] - self.foto_map[pixel_id + data.MIN_LENGH_SAMPLE][1]
         for key in data.PATTERN_GRAMMA:
-            if self.is_in_range(sub_pixels, data.PATTERN_GRAMMA[key]):
+            if self.isInRange(sub_pixels, data.PATTERN_GRAMMA[key]):
                 return key
         if data.DEBUG:
             print(sub_pixels)
@@ -109,7 +109,7 @@ class PhotoAnalize:
         ret = ""
         counter = 0
         for it in range(0, len(self.foto_map) - data.MIN_LENGH_SAMPLE, data.MIN_LENGH_SAMPLE):
-            term = self.get_word_in_grammar(it)
+            term = self.getTermInGrammar(it)
             self.foto_grammar_not_sub += term
             if len(ret) > 0 and term == ret[-1]:
                 counter += 1

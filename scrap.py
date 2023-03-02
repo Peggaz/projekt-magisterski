@@ -19,13 +19,13 @@ class ScrappGoogelGraph:
         self.page = None
         self.url = f"https://www.google.com/search?q={word}"
         if self.continue_scrap or scrap_forcer:
-            self.init()
+            self.scrap()
             if save_as_png:
                 self.rand = random.randint(0, 9999999)
                 self.save_svg_as_file()
             self.svg_to_png(self.photo_url)
 
-    def init(self):
+    def scrap(self):
         params = {'api_key': google_account.api_key, 'url': self.url}
         for it in range(data.MAX_ITERATE_SEARCH):
             self.page = requests.get('http://api.scraperapi.com/', params=urlencode(params))

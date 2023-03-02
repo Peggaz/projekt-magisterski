@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 {% block main_content %}
 <section>
-    <div class="text-center">
+    <div class="welcome-wrapper text-center form-backgrouond">
+        <h1 class="center form-text">
+            Wpisz nazwę podmiotu notowanego na giełdzie, którego cenę akcji przedstawia wykres w wyszukiwarce
+            Google
+        </h1>
         <form action=/render_answer method="post">
             <input class="input-lg" type="text" name="name" placeholder="Wig20"></input>
             <button class="btn-dark btn-lg" type="submit">Submit</button>
         </form>
+    </div>
     </div>
 </section>
 {% endblock %}

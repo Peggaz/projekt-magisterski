@@ -24,6 +24,11 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/about_system", methods=['GET'])
+def about_system():
+    return render_template("about_system.html")
+
+
 @app.route("/instruction", methods=['GET'])
 def instruction():
     return render_template("instruction.html")
@@ -62,8 +67,6 @@ def render_answer():
 
 @app.route("/templates", methods=['GET'])
 def templates():
-    # @TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
-
     return render_template("templates.html", templates=data.TEMPLATES, len=data.MIN_LENGH_SAMPLE,
                            tolerance=data.DEVIANTION_TOLERANCE)
     # return render_template("error.html")
@@ -71,7 +74,6 @@ def templates():
 
 @app.route("/terms", methods=['GET'])
 def terms():
-    # @TODO: print temlate, template ma w zamyśle być listą pnd któe należy wyświetlić jako wrzorce
     terms = []
     for term in data.PATTERN_GRAMMA:
         terms.append(term)
@@ -82,7 +84,6 @@ def terms():
 @app.route("/error", methods=['GET'])
 def error():
     logging.info("error web")
-    # TODO do wywalenia
     return render_template("error.html")
 
 
