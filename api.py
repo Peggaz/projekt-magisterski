@@ -50,13 +50,20 @@ def render_answer():
             if from_data['name'] not in data.PRERENDERED_ANALIZE:
                 data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
                 main_content.photo_befor_render(from_data['name'])
-            return render_template("render_answer.html", photo_template_word=main_content.prerender_analize[from_data['name']]['photo_template_word'],
-                                   photo_template_lev=main_content.prerender_analize[from_data['name']]['photo_template_lev'],
-                                   photo_template_url=main_content.prerender_analize[from_data['name']]['photo_template_url'],
+            return render_template("render_answer.html",
+                                   photo_template_word=main_content.prerender_analize[from_data['name']][
+                                       'photo_template_word'],
+                                   photo_template_lev=main_content.prerender_analize[from_data['name']][
+                                       'photo_template_lev'],
+                                   photo_template_url=main_content.prerender_analize[from_data['name']][
+                                       'photo_template_url'],
                                    photo_user_url=main_content.prerender_analize[from_data['name']]['photo_user_url'],
-                                   photo_user_generate_url=main_content.prerender_analize[from_data['name']]['photo_user_generate_url'],
-                                   photo_user_word_sub=main_content.prerender_analize[from_data['name']]['photo_user_word_sub'],
-                                   photo_user_word=main_content.prerender_analize[from_data['name']]['photo_user_word']
+                                   photo_user_generate_url=main_content.prerender_analize[from_data['name']][
+                                       'photo_user_generate_url'],
+                                   photo_user_word_sub=main_content.prerender_analize[from_data['name']][
+                                       'photo_user_word_sub'],
+                                   photo_user_word=main_content.prerender_analize[from_data['name']]['photo_user_word'],
+                                   prediction=main_content.prerender_analize[from_data['name']]['prediction'],
                                    )
 
         else:

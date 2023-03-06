@@ -10,9 +10,9 @@ MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
 LEVENSHTEIN_DISTANCE_MAX = 1000
 TEMPLATES = [
-    'AAAABbBbbbbbaaaAAA',
-    'BBBBBbbBBBaabBBBBB',
-    'CCCCCccCCCaacCCCCC'
+    ('AAAABbBbbbbbaaaAAA', "wzrost"),
+    ('BBBBBbbBBBaabBBBBB', "stabilizację"),
+    ('CCCCCccCCCaacCCCCC', "spadek"),
 ]
 PRERENDERED_ANALIZE = [
     # 'akcje tesli',

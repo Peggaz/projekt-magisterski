@@ -14,9 +14,10 @@ class MainContent:
         self.prerender_analize = {}
         self.graf_template_png = {}
         for iterator in data.TEMPLATES:
-            if not os.path.exists(os.path.join(f'static/img/{iterator}.png')):
-                photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True,
-                                                                fiele_name=os.path.join(f'static/img/{iterator}.png'))
+            if not os.path.exists(os.path.join(f'static/img/{iterator[0]}.png')):
+                photoGenerate = photo_generate.GenerateTemplate(iterator[0], save_as_png=True,
+                                                                fiele_name=os.path.join(
+                                                                    f'static/img/{iterator[0]}.png'))
 
         for iterator in data.PATTERN_GRAMMA:
             if not os.path.exists(os.path.join(f'static/img/terms/{iterator}.png', )):
@@ -48,5 +49,6 @@ class MainContent:
                                                    'photo_user_url': s.photo_url if data.SCRAP else "static/img/Wig20.png",
                                                    'photo_user_generate_url': photoGenerate.photo_url if photoGenerate else f'static/img/photo_generate_{word_search}.png',
                                                    'photo_user_word_sub': photoAnalize.foto_grammar,
-                                                   'photo_user_word': photoCompoare.photo_word
+                                                   'photo_user_word': photoCompoare.photo_word,
+                                                   'prediction': photoCompoare.prediction
                                                    }

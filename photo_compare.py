@@ -5,7 +5,9 @@ class PhotoCompare:
         self.photo_word = photo_word
         self.template = None
         self.levenshtein_distance = data.LEVENSHTEIN_DISTANCE_MAX
+        self.prediction = None
         self.compare()
+
 
     def LevenshteinDistance(self, s, t):
         '''
@@ -34,13 +36,14 @@ class PhotoCompare:
         local_word = self.photo_word
         # iteracja po predefiniowanych wzorcach
         for template in data.TEMPLATES:
-            len_sub_word = len(self.photo_word) - len(template)
+            len_sub_word = len(self.photo_word) - len(template[0])
             #iteracja po n-gramach o długości wzorca
             for it in range(0, len_sub_word):
                 levenshteinDistance = self.LevenshteinDistance(self.photo_word[it:len(self.photo_word) - len_sub_word + it], template)
                 if levenshteinDistance < data.LEVENSHTEIN_DISTANCE_MAX and self.levenshtein_distance > levenshteinDistance:
-                    self.template = template
+                    self.prediction = template[1]
+                    self.template = template[0]
                     self.levenshtein_distance = levenshteinDistance
-                    #Dodanie <mark> do kodu html w celu zaznaczenia dodanie najlepszego wzorca
+                    # Dodanie <mark> do kodu html w celu zaznaczenia dodanie najlepszego wzorca
                     local_word = f"{self.photo_word[0:it]}<mark id='mark_compare_word'>{self.photo_word[it:len(self.photo_word) - len_sub_word + it]}</mark>{self.photo_word[len(self.photo_word) - len_sub_word + it:]}"
         self.photo_word = local_word
