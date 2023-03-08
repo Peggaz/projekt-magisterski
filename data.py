@@ -5,10 +5,10 @@ import data
 logging.basicConfig(filename="log.txt", encoding='utf-8', level=logging.DEBUG)
 INDEX_PHOTO = 0
 DEBUG = True
-SCRAP = False
+SCRAP = True
 MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
-LEVENSHTEIN_DISTANCE_MAX = 1000
+LEVENSHTEIN_DISTANCE_MAX = 18
 TEMPLATES = [
     ('AAAABbBbbbbbaaaAAA', "wzrost"),
     ('BBBBBbbBBBaabBBBBB', "stabilizację"),
@@ -16,10 +16,10 @@ TEMPLATES = [
 ]
 PRERENDERED_ANALIZE = [
     # 'akcje tesli',
-    # 'Wig20',
+    # 'wig20',
     # 'akcje orlen'
 ]
-MAX_ITERATE_SEARCH = 3
+MAX_ITERATE_SEARCH = 1
 
 def grammar_genarate():
     ret = {}

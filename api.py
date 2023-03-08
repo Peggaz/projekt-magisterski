@@ -43,33 +43,33 @@ def send_photo():
 @app.route("/render_answer", methods=['GET', 'POST'])
 def render_answer():
     logging.info("render_answer")
-    try:
-        if request.method == 'POST':
-            from_data = request.form
-            data.logging.info(f"żądanie analizy dla:{from_data['name']}")
-            if from_data['name'] not in data.PRERENDERED_ANALIZE:
-                data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
-                main_content.photo_befor_render(from_data['name'])
-            return render_template("render_answer.html",
-                                   photo_template_word=main_content.prerender_analize[from_data['name']][
-                                       'photo_template_word'],
-                                   photo_template_lev=main_content.prerender_analize[from_data['name']][
-                                       'photo_template_lev'],
-                                   photo_template_url=main_content.prerender_analize[from_data['name']][
-                                       'photo_template_url'],
-                                   photo_user_url=main_content.prerender_analize[from_data['name']]['photo_user_url'],
-                                   photo_user_generate_url=main_content.prerender_analize[from_data['name']][
-                                       'photo_user_generate_url'],
-                                   photo_user_word_sub=main_content.prerender_analize[from_data['name']][
-                                       'photo_user_word_sub'],
-                                   photo_user_word=main_content.prerender_analize[from_data['name']]['photo_user_word'],
-                                   prediction=main_content.prerender_analize[from_data['name']]['prediction'],
-                                   )
+    # try:
+    if request.method == 'POST':
+        from_data = request.form
+        data.logging.info(f"żądanie analizy dla:{from_data['name']}")
+        if from_data['name'] not in data.PRERENDERED_ANALIZE:
+            data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
+            main_content.photo_befor_render(from_data['name'])
+        return render_template("render_answer.html",
+                               photo_template_word=main_content.prerender_analize[from_data['name']][
+                                   'photo_template_word'],
+                               photo_template_lev=main_content.prerender_analize[from_data['name']][
+                                   'photo_template_lev'],
+                               photo_template_url=main_content.prerender_analize[from_data['name']][
+                                   'photo_template_url'],
+                               photo_user_url=main_content.prerender_analize[from_data['name']]['photo_user_url'],
+                               photo_user_generate_url=main_content.prerender_analize[from_data['name']][
+                                   'photo_user_generate_url'],
+                               photo_user_word_sub=main_content.prerender_analize[from_data['name']][
+                                   'photo_user_word_sub'],
+                               photo_user_word=main_content.prerender_analize[from_data['name']]['photo_user_word'],
+                               prediction=main_content.prerender_analize[from_data['name']]['prediction'],
+                               )
 
-        else:
-            render_template("error.html", message="Niepoprawne dane")
-    except Exception as e:
-        return render_template("error.html", message=e)
+    else:
+        render_template("error.html", message="Niepoprawne dane")
+    # except Exception as e:
+    #     return render_template("error.html", message=e)
 
 
 @app.route("/templates", methods=['GET'])

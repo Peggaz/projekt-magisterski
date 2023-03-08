@@ -28,12 +28,17 @@ class MainContent:
             if not os.path.exists(os.path.join(f'static/img/{it}_{date.today()}.png')):
                 self.photo_befor_render(it)
     def photo_befor_render(self, word_search):
+        word_search = word_search.replace(" ", "+").lower()
         data.logging.info("photo_befor_render")
         if word_search not in self.prerender_analize:
             photoAnalize = None
             if (data.SCRAP):
-                s = scrap.ScrappGoogelGraph(word_search)
-                photoAnalize = photo_analize.PhotoAnalize(s.photo_url)
+                s = None
+                try:
+                    s = scrap.ScrappGoogelGraph(word_search, True)
+                    photoAnalize = photo_analize.PhotoAnalize(s.photo_url)
+                except:
+                    photoAnalize = photo_analize.PhotoAnalize("static/img/Wig20.png")
             else:
                 photoAnalize = photo_analize.PhotoAnalize("static/img/Wig20.png")
             photo_generate_file_name = os.path.join(f'static/img/photo_generate_{word_search}.png')
@@ -46,7 +51,7 @@ class MainContent:
                                                    'photo_template_lev': photoCompoare.levenshtein_distance,
                                                    'photo_template_url': os.path.join(
                                                        f'static/img/{photoCompoare.template}.png'),
-                                                   'photo_user_url': s.photo_url if data.SCRAP else "static/img/Wig20.png",
+                                                   'photo_user_url': s.photo_url if data.SCRAP and s != None else "static/img/Wig20.png",
                                                    'photo_user_generate_url': photoGenerate.photo_url if photoGenerate else f'static/img/photo_generate_{word_search}.png',
                                                    'photo_user_word_sub': photoAnalize.foto_grammar,
                                                    'photo_user_word': photoCompoare.photo_word,

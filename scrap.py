@@ -11,19 +11,28 @@ from svglib.svglib import svg2rlg
 
 # class scraping google graph svg
 class ScrappGoogelGraph:
-    def __init__(self, word, save_as_png=True, file_name=None, scrap_forcer=False):
-        word = word.replace(" ", "+")
-        self.photo_url = os.path.join(f'static/img/photo_scrap{word}.png')
+    def __init__(self, word, scrap_forcer=False):
+        self.word = word.replace(" ", "+").lower()
+        if data.DEBUG:
+            print(self.word)
+        self.photo_url = os.path.join(f'static/img/photo_scrap{self.word}.png')
+        self.svg_url = os.path.join(f'static/scrap_svg/{self.word}.svg')
         self.continue_scrap = not os.path.exists(self.photo_url)
         self.svg = None
         self.page = None
-        self.url = f"https://www.google.com/search?q={word}"
+        self.url = f"https://www.google.com/search?q={self.word}"
         if self.continue_scrap or scrap_forcer:
-            self.scrap()
-            if save_as_png:
-                self.rand = random.randint(0, 9999999)
+            if not os.path.exists(self.svg_url) or self.checkPrescraperFile(self.word):
+                self.scrap()
                 self.save_svg_as_file()
             self.svg_to_png(self.photo_url)
+
+    def checkPrescraperFile(self, word):
+        for i in word.split("+"):
+            word2 = i + word2
+        if os.path.exists(f'static/scrap_svg/{word2.replace(" ", "+")}.svg'):
+            self.word = word2.replace(" ", "+")
+            return True
 
     def scrap(self):
         params = {'api_key': google_account.api_key, 'url': self.url}
@@ -33,7 +42,7 @@ class ScrappGoogelGraph:
             if self.svg is not None:
                 break
         if self.svg is None:
-            data.logging.ERROR(f"Próba scrapinngu dla adresu:{self.url}, nie powiodła się")
+            data.logging.ERROR
             raise Exception("Błąd w pobieraniu svg. Najprawdopodobniej nie istnieje wykres google dla podanej frazy")
         self.validate_and_fix_svg()
 
@@ -49,12 +58,12 @@ class ScrappGoogelGraph:
         return svg
 
     def validate_and_fix_svg(self):
-        if "viewBox" not in self.svg.text:
+        if "viewBox" not in self.svg.text and "viewbox" not in self.svg.text:
             self.svg['viewBox'] = "0 0 643 164"
 
     # convert svg to png
-    def svg_to_png(self, file_name="photo_scrap.png"):
-        drawing = svg2rlg(f'tmp/{self.rand}.svg')
+    def svg_to_png(self, file_name="tmp/photo_scrap.png"):
+        drawing = svg2rlg(self.svg_url)
         renderPM.drawToFile(drawing, file_name, fmt='PNG')
 
     def save_svg_as_file(self):
@@ -64,7 +73,10 @@ class ScrappGoogelGraph:
         @:param name - nazwa zapisanego pliku
         @:param location - scieża zapisu domyślnie: "../wyniki"
         """
-        f = open(f'tmp/{self.rand}.svg', 'w', encoding='utf-8')  # otwarcie pliku
+        f = open(self.svg_url, 'w', encoding='utf-8')  # otwarcie pliku
+        if data.DEBUG:
+            print("Zapisywanie do pliku: ", self.svg_url)
+            print("svg: ", self.svg)
         try:
             f.write(str(self.svg))
         except:
