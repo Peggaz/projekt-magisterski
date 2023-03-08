@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block main_content %}
 <section class="main-wrapper container center">
-    <h1 class="center"> Wzorce wykorzystywane podczas analizy </h1>
+    <h1 class="center"> Znaki terminalne wykorzystywane podczas analizy </h1>
 
     {% for term in terms %}
-    <div class="center">Term: <i>{{term}}</i> graf dla termu:
-        <img class="img_term center" src="{{ url_for('static', filename = '/img/terms/')}}{{term}}.png">
+    <div class="center">Term: <i>{{term.term}}</i>
+        tolerancja od {{term.range1}} do {{term.range2}}:
+        <img class="img_term center" src="{{ url_for('static', filename = '/img/terms/')}}{{term.name_photo}}.png">
     </div>
     {% endfor %}
 </section>

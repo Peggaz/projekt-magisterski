@@ -1,5 +1,4 @@
 import os
-from datetime import date
 
 import data
 import photo_analize
@@ -20,27 +19,38 @@ class MainContent:
                                                                     f'static/img/{iterator[0]}.png'))
 
         for iterator in data.PATTERN_GRAMMA:
-            if not os.path.exists(os.path.join(f'static/img/terms/{iterator}.png', )):
-                photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(
-                    f'static/img/terms/{iterator}.png'))
+            if (iterator < 'a'):
+                if not os.path.exists(os.path.join(f'static/img/terms/{iterator}.png', )):
+                    photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(
+                        f'static/img/terms/{iterator}.png'), term=True)
+            else:
+                if not os.path.exists(os.path.join(f'static/img/terms/{iterator}2.png', )):
+                    photoGenerate = photo_generate.GenerateTemplate(iterator, save_as_png=True, fiele_name=os.path.join(
+                        f'static/img/terms/{iterator}2.png'), term=True)
 
         for it in data.PRERENDERED_ANALIZE:
-            if not os.path.exists(os.path.join(f'static/img/{it}_{date.today()}.png')):
-                self.photo_befor_render(it)
+            self.photo_befor_render(it)
     def photo_befor_render(self, word_search):
-        word_search = word_search.replace(" ", "+").lower()
         data.logging.info("photo_befor_render")
         if word_search not in self.prerender_analize:
             photoAnalize = None
             if (data.SCRAP):
                 s = None
                 try:
-                    s = scrap.ScrappGoogelGraph(word_search, True)
-                    photoAnalize = photo_analize.PhotoAnalize(s.photo_url)
+                    url = os.path.join(f'static/img/photo_scrap{word_search}.png')
+                    if (not os.path.exists(url)):
+                        s = scrap.ScrappGoogelGraph(word_search, True)
+                        photoAnalize = photo_analize.PhotoAnalize(s.photo_url)
+                    else:
+                        photoAnalize = photo_analize.PhotoAnalize(url)
+
                 except:
-                    photoAnalize = photo_analize.PhotoAnalize("static/img/Wig20.png")
+                    url = "static/img/wig20.png"
+                    photoAnalize = photo_analize.PhotoAnalize("static/img/wig20.png")
             else:
-                photoAnalize = photo_analize.PhotoAnalize("static/img/Wig20.png")
+                url = "static/img/wig20.png"
+                photoAnalize = photo_analize.PhotoAnalize("static/img/wig20.png")
+
             photo_generate_file_name = os.path.join(f'static/img/photo_generate_{word_search}.png')
             photoCompoare = photo_compare.PhotoCompare(photoAnalize.foto_grammar_not_sub)
             photoGenerate = None
@@ -51,7 +61,7 @@ class MainContent:
                                                    'photo_template_lev': photoCompoare.levenshtein_distance,
                                                    'photo_template_url': os.path.join(
                                                        f'static/img/{photoCompoare.template}.png'),
-                                                   'photo_user_url': s.photo_url if data.SCRAP and s != None else "static/img/Wig20.png",
+                                                   'photo_user_url': s.photo_url if data.SCRAP and s != None else url,
                                                    'photo_user_generate_url': photoGenerate.photo_url if photoGenerate else f'static/img/photo_generate_{word_search}.png',
                                                    'photo_user_word_sub': photoAnalize.foto_grammar,
                                                    'photo_user_word': photoCompoare.photo_word,

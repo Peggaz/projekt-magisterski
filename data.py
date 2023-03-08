@@ -9,6 +9,7 @@ SCRAP = True
 MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
 LEVENSHTEIN_DISTANCE_MAX = 18
+LEVENSHTEIN_DISTANCE_GOOD = 5
 TEMPLATES = [
     ('AAAABbBbbbbbaaaAAA', "wzrost"),
     ('BBBBBbbBBBaabBBBBB', "stabilizację"),
@@ -16,7 +17,7 @@ TEMPLATES = [
 ]
 PRERENDERED_ANALIZE = [
     # 'akcje tesli',
-    # 'wig20',
+    'wig20'
     # 'akcje orlen'
 ]
 MAX_ITERATE_SEARCH = 1

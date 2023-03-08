@@ -56,6 +56,8 @@ def render_answer():
                                    'photo_template_word'],
                                photo_template_lev=main_content.prerender_analize[word_search][
                                    'photo_template_lev'],
+                               photo_template_lev_good="dobrą" if main_content.prerender_analize[word_search][
+                                                                      'photo_template_lev'] <= data.LEVENSHTEIN_DISTANCE_GOOD else "słabą",
                                photo_template_url=main_content.prerender_analize[word_search][
                                    'photo_template_url'],
                                photo_user_url=main_content.prerender_analize[word_search]['photo_user_url'],
@@ -82,9 +84,18 @@ def templates():
 
 @app.route("/terms", methods=['GET'])
 def terms():
+    class Term:
+        def __init__(self, term):
+            self.term = term
+            self.name_photo = term
+            self.range1 = data.PATTERN_GRAMMA[term][0]
+            self.range2 = data.PATTERN_GRAMMA[term][1]
+            if term >= 'a':
+                self.name_photo = term + '2'
+
     terms = []
     for term in data.PATTERN_GRAMMA:
-        terms.append(term)
+        terms.append(Term(term))
     return render_template("terms.html", terms=terms)
     # return render_template("error.html")
 

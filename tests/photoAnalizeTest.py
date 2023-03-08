@@ -5,7 +5,7 @@ from photo_analize import PhotoAnalize
 
 class TestPhotoAnalize(unittest.TestCase):
     def setUp(self):
-        self.pa = PhotoAnalize('Wig20.png')
+        self.pa = PhotoAnalize('wig20.png')
 
     def test_makeAndGetFotoMap(self):
         expected_length = 643
