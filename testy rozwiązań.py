@@ -1,13 +1,16 @@
-import requests
-from bs4 import BeautifulSoup
+#Funkcja odpowiedzialna za wyznaczanie liczb pierwszych
+def primes(n):
+    '''
+    Funkcja odpowiedzialna za wyznaczanie liczb pierwszych
+    @:param n - liczba do sprawdzenia
+    @:return - lista liczb pierwszych
+    '''
+    if n < 2:
+        return []
+    sieve = [True] * (n + 1)
+    for x in range(2, int(n ** 0.5) + 1):
+        for y in range(2, (n // x) + 1):
+            sieve[(x * y)] = False
+    return [i for i in range(2, n + 1) if sieve[i]]
 
-url = 'https://www.google.com/search?q=wig20'
-response = requests.get(url)
-soup = BeautifulSoup(response.text, 'html.parser')
-
-svg = soup.find('svg', {'class': 'chrt-svg'})
-
-if svg:
-    print(svg.prettify())
-else:
-    print('Nie znaleziono wykresu SVG')
+print(primes(100))
