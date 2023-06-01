@@ -4,21 +4,26 @@ import random
 import data
 import matplotlib.pyplot as plt
 
-
 class GenerateTemplate:
-    def __init__(self, word, show=False, save_as_png=False, fiele_name=None, term=False):
+    def __init__(self, word, show=False, save_as_png=False, file_name=None, term=False):
         plt.rcParams["figure.figsize"] = (20, 8)
         self.photo = None
         self.word = word
         self.generate(word, show, term)
         if save_as_png:
-            if fiele_name is None:
-                self.photo_url = os.path.join(f'static/img/photo_generate{random.randint(0, 9999999)}.png')
+            if file_name is None:
+                self.photo_url = f'static/img/photo_generate{random.randint(0, 9999999)}.png'
             else:
-                self.photo_url = os.path.join(fiele_name)
+                if data.MAIN_PATH not in file_name:
+                    if file_name[0] == '/':
+                        self.photo_url = f'{data.MAIN_PATH}{file_name}'
+                    else:
+                        self.photo_url = f'{data.MAIN_PATH}/{file_name}'
+                else:
+                    self.photo_url = file_name
             self.photo.savefig(self.photo_url)
-        if data.DEBUG:
-            self.photo.show()
+        # if data.DEBUG:
+        #     self.photo.show()
         plt.cla()
 
     def generate(self, word=None, show=False, term=False):
@@ -40,7 +45,7 @@ class GenerateTemplate:
             it1 += 1
         if term:
             plt.xlim(0, 1)
-            plt.ylim(-50, 50)
+            plt.ylim(50, -50)
         plt.plot(x, y)
         if show:
             plt.show()

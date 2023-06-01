@@ -1,11 +1,15 @@
 import logging
-
-import data
-
+import os
 logging.basicConfig(filename="log.txt", encoding='utf-8', level=logging.DEBUG)
 INDEX_PHOTO = 0
-DEBUG = False
+DEBUG = True
 SCRAP = False
+LIMBA = True
+if LIMBA:
+    DEBUG = False
+    MAIN_PATH = "/home/epi/18_nowocien/projekt-magisterski"
+else:
+    MAIN_PATH = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
 MIN_LENGH_SAMPLE = 4
 DEVIANTION_TOLERANCE = 2
 LEVENSHTEIN_DISTANCE_MAX = 18
@@ -16,9 +20,11 @@ TEMPLATES = [
     ('CCCCCccCCCaacCCCCC', "spadek"),
 ]
 PRERENDERED_ANALIZE = [
-    # 'akcje tesli',
-    'wig20'
-    # 'akcje orlen'
+    'akcje tesli',
+    'wig20',
+    'akcje orlen',
+    'akcje kghm',
+    'akcje google'
 ]
 MAX_ITERATE_SEARCH = 1
 
@@ -31,27 +37,9 @@ def grammar_genarate():
         ret[it] = (it_dec, it_dec + DEVIANTION_TOLERANCE)
         ret[str(it).upper()] = (-it_dec - DEVIANTION_TOLERANCE, -it_dec)
         it_dec += DEVIANTION_TOLERANCE
-    if(data.DEBUG):
+    if(DEBUG):
         print(ret)
     return ret
 
 
 PATTERN_GRAMMA = grammar_genarate()
-
-# {'a': (0, 8),
-# 'b': (8, 16),
-# 'c': (16, 24),
-# 'd': (24, 32),
-# 'e': (32, 40),
-# 'f': (40, 48),
-# 'g': (48, 56),
-# 'x': (56, 999),
-# 'A': (-8, 0),
-# 'B': (-16, -8),
-# 'C': (-24, -16),
-# 'D': (-32, -24),
-# 'E': (-40, -32),
-# 'F': (-48, -40),
-# 'G': (-56, -48),
-# 'Y': (-999, -56)
-# }

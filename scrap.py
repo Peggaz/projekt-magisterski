@@ -15,14 +15,15 @@ class ScrappGoogelGraph:
         self.word = word.replace(" ", "+").lower()
         if data.DEBUG:
             print(self.word)
-        self.photo_url = os.path.join(f'static/img/photo_scrap{self.word}.png')
-        self.svg_url = os.path.join(f'static/scrap_svg/{self.word}.svg')
+        self.photo_url = f'{data.MAIN_PATH}/static/img/photo_scrap{self.word}.png'
+        self.svg_url = f'{data.MAIN_PATH}/static/scrap_svg/{self.word}.svg'
         self.continue_scrap = not os.path.exists(self.photo_url)
         self.svg = None
         self.page = None
         self.url = f"https://www.google.com/search?q={self.word}"
         if self.continue_scrap or scrap_forcer:
             if not os.path.exists(self.svg_url) or self.checkPrescraperFile(self.word):
+
                 self.scrap()
                 self.save_svg_as_file()
             self.svg_to_png(self.photo_url)
@@ -33,7 +34,6 @@ class ScrappGoogelGraph:
         if os.path.exists(f'static/scrap_svg/{word2.replace(" ", "+")}.svg'):
             self.word = word2.replace(" ", "+")
             return True
-
     def scrap(self):
         params = {'api_key': google_account.api_key, 'url': self.url}
         for it in range(data.MAX_ITERATE_SEARCH):

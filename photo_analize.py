@@ -27,7 +27,7 @@ class PhotoAnalize:
 
     def makeAndGetFotoMap(self, foto_url=None):
         '''
-        wczytuje zdjęcie i iterując piksel po pikselu zapisuje xy pikseli linii wykresu
+        Wczytuje zdjęcie i iterując piksel po pikselu zapisuje xy pikseli linii wykresu
         :param foto_url:
         :return: Map
         '''

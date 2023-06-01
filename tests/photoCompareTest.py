@@ -1,7 +1,5 @@
 import unittest
-
 from photo_compare import PhotoCompare
-
 
 class TestPhotoCompare(unittest.TestCase):
     def setUp(self):
@@ -19,7 +17,7 @@ class TestPhotoCompare(unittest.TestCase):
         self.assertIsInstance(self.pc.levenshtein_distance, int)
         self.assertEqual(self.pc.levenshtein_distance, 0)
         self.assertIsInstance(self.pc.photo_word, str)
-        self.assertEqual(self.pc.photo_word, "<mark id='compare_word'>AAAABbBbbbbbaaaAAA</mark>AAAABbBbbbbbaaaAAA")
+        self.assertEqual(self.pc.photo_word, '<mark id='compare_word'>AAAABbBbbbbbaaaAAA</mark>AAAABbBbbbbbaaaAAA')
 
 if __name__ == '__main__':
     unittest.main()

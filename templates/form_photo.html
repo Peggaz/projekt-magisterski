@@ -6,11 +6,18 @@
             Wpisz nazwę podmiotu notowanego na giełdzie, którego cenę akcji przedstawia wykres w wyszukiwarce
             Google
         </h1>
-        <form action=/render_answer method="post">
+        <form action="{{ url_for('render_answer') }}" method="post">
             <input class="input-lg" type="text" name="name" placeholder="wig20"></input>
-            <button class="btn-dark btn-lg" type="submit">Submit</button>
+            <button class="btn-dark btn-lg" type="submit">Wyślij</button>
         </form>
+        <div class="prerender-container">
+            {% for item in prerender_analize %}
+                <form action="{{ url_for('render_answer') }}" method="post">
+                    <button class="input-lg prerender-button " type="submit" name="name" value="{{ item }}"> {{ item }}</button>
+                </form>
+            {% endfor %}
+        </div>
     </div>
-    </div>
+
 </section>
 {% endblock %}

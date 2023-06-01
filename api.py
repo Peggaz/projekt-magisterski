@@ -5,10 +5,12 @@ import main
 from flask import Flask
 from flask import render_template
 from flask import request
-
-logging.basicConfig(filename="log.txt")
+if not data.DEBUG:
+    logging.basicConfig(filename="log.txt")
 
 app = Flask(__name__)
+app.config["APPLICATION_ROOT"] = "/home/epi/18_nowocien/projekt-magisterski/"
+
 
 template_dir = 'templates'
 main_content = main.MainContent()
@@ -36,43 +38,48 @@ def instruction():
 
 @app.route("/form_photo", methods=['GET'])
 def send_photo():
-    data.logging.info("wysłano formularz")
-    return render_template("form_photo.html")
+    if not data.DEBUG:
+        data.logging.info("wysłano formularz")
+    return render_template("form_photo.html", prerender_analize=data.PRERENDERED_ANALIZE)
 
 
 @app.route("/render_answer", methods=['GET', 'POST'])
 def render_answer():
-    logging.info("render_answer")
-    # try:
-    if request.method == 'POST':
-        from_data = request.form
-        word_search = from_data['name'].replace(" ", "+")
-        data.logging.info(f"żądanie analizy dla:{from_data['name']}")
-        if word_search not in data.PRERENDERED_ANALIZE:
-            data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
-            main_content.photo_befor_render(word_search)
-        return render_template("render_answer.html",
-                               photo_template_word=main_content.prerender_analize[word_search][
-                                   'photo_template_word'],
-                               photo_template_lev=main_content.prerender_analize[word_search][
-                                   'photo_template_lev'],
-                               photo_template_lev_good="dobrą" if main_content.prerender_analize[word_search][
-                                                                      'photo_template_lev'] <= data.LEVENSHTEIN_DISTANCE_GOOD else "słabą",
-                               photo_template_url=main_content.prerender_analize[word_search][
-                                   'photo_template_url'],
-                               photo_user_url=main_content.prerender_analize[word_search]['photo_user_url'],
-                               photo_user_generate_url=main_content.prerender_analize[word_search][
-                                   'photo_user_generate_url'],
-                               photo_user_word_sub=main_content.prerender_analize[word_search][
-                                   'photo_user_word_sub'],
-                               photo_user_word=main_content.prerender_analize[word_search]['photo_user_word'],
-                               prediction=main_content.prerender_analize[word_search]['prediction'],
-                               )
+    if not data.DEBUG:
+        logging.info("render_answer")
+    try:
+        if request.method == 'POST':
+            from_data = request.form
+            word_search = from_data['name'].replace(" ", "+")
+            if not data.DEBUG:
+                data.logging.info(f"żądanie analizy dla:{from_data['name']}")
+            if word_search not in data.PRERENDERED_ANALIZE:
+                if not data.DEBUG:
+                    data.logging.info(f"Scrapowanie oraz ponowna analiza dla:{from_data['name']}")
+                main_content.photo_befor_render(word_search)
+            return render_template("render_answer.html",
+                                   photo_template_word=main_content.prerender_analize[word_search][
+                                       'photo_template_word'],
+                                   photo_template_lev=main_content.prerender_analize[word_search][
+                                       'photo_template_lev'],
+                                   photo_template_lev_good="dobrą" if main_content.prerender_analize[word_search][
+                                       'photo_template_lev'] <= data.LEVENSHTEIN_DISTANCE_GOOD else "słabą",
+                                   photo_template_url=main.link_photo_to_limba(
+                                       main_content.prerender_analize[word_search][
+                                           'photo_template_url']),
+                                   photo_user_url=main.link_photo_to_limba(main_content.prerender_analize[word_search]['photo_user_url']),
+                                   photo_user_generate_url=main.link_photo_to_limba(main_content.prerender_analize[word_search][
+                                       'photo_user_generate_url']),
+                                   photo_user_word_sub=main_content.prerender_analize[word_search][
+                                       'photo_user_word_sub'],
+                                   photo_user_word=main_content.prerender_analize[word_search]['photo_user_word'],
+                                   prediction=main_content.prerender_analize[word_search]['prediction'],
+                                   )
 
-    else:
-        render_template("error.html", message="Niepoprawne dane")
-    # except Exception as e:
-    #     return render_template("error.html", message=e)
+        else:
+            render_template("error.html", message="Niepoprawne dane")
+    except Exception as e:
+        return render_template("error.html", message=e)
 
 
 @app.route("/templates", methods=['GET'])
@@ -93,6 +100,7 @@ def terms():
             if term >= 'a':
                 self.name_photo = term + '2'
 
+
     terms = []
     for term in data.PATTERN_GRAMMA:
         terms.append(Term(term))
@@ -102,12 +110,16 @@ def terms():
 
 @app.route("/error", methods=['GET'])
 def error():
-    logging.info("error web")
+    if not data.DEBUG:
+        logging.info("error web")
     return render_template("error.html")
 
 
 if __name__ == '__main__':
     if data.DEBUG:
-        app.run(host='localhost', debug=data.DEBUG, port=5003)
+        app.run(host='localhost', debug=data.DEBUG, port=5000)
     else:
-        app.run(host='wierzba.wzks.uj.edu.pl', debug=data.DEBUG, port=5110)
+        if data.LIMBA:
+            app.run(host='limba.wzks.uj.edu.pl', debug=data.DEBUG, port=5110)
+        else:
+            app.run(host='wierzba.wzks.uj.edu.pl', debug=data.DEBUG, port=5110)

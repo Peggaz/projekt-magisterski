@@ -13,16 +13,16 @@
         <!--        <img class="logo" src="https://www.copernicuscenter.edu.pl/wp-content/themes/copernicuscenter/dist/images/uj-logo.png">-->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li><a class="nav-link" href="/">Analiza wzorców</a></li>
+                <li><a class="nav-link" href="{{ url_for('welcome') }}">Analiza wzorców</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="nav-link" href="/form_photo">Analiza wykresu</a></li>
-                <li><a class="nav-link" href="/templates">Wzorce</a></li>
+                <li><a class="nav-link" href="{{ url_for('send_photo') }}">Analiza wykresu</a></li>
+                <li><a class="nav-link" href="{{ url_for('templates') }}">Wzorce</a></li>
                 <!--                <li><a class="nav-link" href="/instruction">Instrukcja</a></li>-->
-                <li><a class="nav-link" href="/about_system">O systemie</a></li>
-                <li><a class="nav-link" href="/about">O serwisie</a></li>
+                <li><a class="nav-link" href="{{ url_for('about_system') }}">O systemie</a></li>
+                <li><a class="nav-link" href="{{ url_for('about')}}">O serwisie</a></li>
                 <!--                <li><a class="nav-link" href="/render_answer">render_answer</a></li>-->
-                <li><a class="nav-link" href="/terms">Znaki terminalne</a></li>
+                <li><a class="nav-link" href="{{ url_for('terms') }}">Znaki terminalne</a></li>
             </ul>
         </div>
     </div>

@@ -33,7 +33,6 @@ class PhotoCompare:
                               d[i - 1][j - 1] + substitution_cost)  # zamiana/substitucja
 
         return d[m][n]
-
     def levenshteinDistance(self, s, t):
         '''
         Funkcja metryki cosinusowej ze wzoru odleglosc n-gramów
@@ -71,10 +70,9 @@ class PhotoCompare:
         # iteracja po predefiniowanych wzorcach
         for template in data.TEMPLATES:
             len_sub_word = len(self.photo_word) - len(template[0])
-            # iteracja po n-gramach o długości wzorca
+            #iteracja po n-gramach o długości wzorca
             for it in range(0, len_sub_word - len(template[0])):
-                levenshtein_distance = self.levenshteinDistance(
-                    self.photo_word[it:len(self.photo_word) - len_sub_word + it], template[0])
+                levenshtein_distance = self.levenshteinDistance(self.photo_word[it:len(self.photo_word) - len_sub_word + it], template[0])
                 if levenshtein_distance < data.LEVENSHTEIN_DISTANCE_MAX and self.levenshtein_distance > levenshtein_distance:
                     self.prediction = template[1]
                     self.template = template[0]
